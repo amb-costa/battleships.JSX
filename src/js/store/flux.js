@@ -1,7 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      A: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       board: {
         A: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         B: [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -13,6 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         H: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         I: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       },
+      myList: [],
       demo: [
         {
           title: "FIRST",
@@ -27,6 +27,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       ],
     },
     actions: {
+      pusher: (el) => {
+        const stored = getStore().myList;
+        stored.includes(el) ? console.log("already clicked") : stored.push(el);
+        setStore({ myList: stored });
+        return console.log(getStore().myList);
+      },
+
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
         getActions().changeColor(0, "green");
