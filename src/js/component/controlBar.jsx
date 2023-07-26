@@ -13,7 +13,7 @@ const ControlBar = () => {
             className="btn mx-1 border"
             type="button"
             onClick={() => {
-              actions.setDirection("Horizontal");
+              actions.setDirection(true);
             }}
           >
             Horizontal
@@ -22,7 +22,7 @@ const ControlBar = () => {
             className="btn mx-1 border"
             type="button"
             onClick={() => {
-              actions.setDirection("Vertical");
+              actions.setDirection(false);
             }}
           >
             Vertical

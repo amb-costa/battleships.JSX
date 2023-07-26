@@ -8,16 +8,13 @@ const BoardButton = ({ buttonID }) => {
 
   return (
     <div
-      className={
-        store.myList.includes(`${buttonID}`)
-          ? "col px-0 border bg-secondary"
-          : "col px-0 border"
-      }
+      className={actions.classPicker(`${buttonID}`)}
       type="button"
       id={buttonID}
+      disabled={store.myList.includes(`${buttonID}`) ? true : false}
       style={{ width: "50px", height: "50px" }}
       onClick={() => {
-        actions.pusher(`${buttonID}`);
+        actions.shipSorter(`${buttonID}`);
       }}
     >
       {buttonID}
