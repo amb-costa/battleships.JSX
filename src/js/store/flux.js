@@ -1,3 +1,5 @@
+import { object } from "prop-types";
+
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -20,12 +22,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       ship: "",
     },
     actions: {
-      pusher: (el) => {
-        const stored = getStore().myList;
-        stored.includes(el) ? console.log("already clicked") : stored.push(el);
-        setStore({ myList: stored });
-        return console.log(getStore().myList);
-      },
       reset: () => {
         setStore({ myList: [] });
         setStore({ direction: "" });
@@ -40,14 +36,21 @@ const getState = ({ getStore, getActions, setStore }) => {
         return console.log(getStore().ship);
       },
       classPicker: (id) => {
-        return getStore().myList.includes(id)
-          ? `${"col px-0 border bg-secondary"}`
-          : `${"col px-0 border"}`;
+        const collection = Object.values(getStore().userBoard);
+        const shipColl = Object.keys(getStore().userBoard);
+        if (!collection.flat().includes(id)) {
+          return `${"col px-0 border"}`;
+        } else {
+        }
       },
-      shipSorter: (id) => {
-        if (getStore().direction) {
-          if (parseInt(id[1]) + parseInt(getStore().ship) > 10) {
-            console.log("too much coord!");
+    },
+    shipSorter: (id) => {
+      if (getStore().direction) {
+        if (parseInt(id[1]) + parseInt(getStore().ship) > 10) {
+          console.log("not enough space to fit!");
+        } else {
+          if (Object.values(getStore().userBoard).flat().includes(id)) {
+            console.log("tile already used!");
           } else {
             let finPick = [];
             for (let i = 0; i < parseInt(getStore().ship); i++) {
@@ -60,14 +63,14 @@ const getState = ({ getStore, getActions, setStore }) => {
               let copy = { ...getStore().userBoard, ...obj };
               setStore({ userBoard: copy });
             } else {
-              console.log("nope!");
+              console.log("you made your ship choice already!");
             }
             console.log(getStore().userBoard);
           }
-        } else {
-          return console.log("inprogress...");
         }
-      },
+      } else {
+        return console.log("inprogress...");
+      }
     },
   };
 };
