@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
+      //board contains 9 alpha rows with 9 numerical columns each
       board: {
         A: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         B: [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -13,18 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         I: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       },
       myList: [],
-      demo: [
-        {
-          title: "FIRST",
-          background: "white",
-          initial: "white",
-        },
-        {
-          title: "SECOND",
-          background: "white",
-          initial: "white",
-        },
-      ],
+      direction: "",
+      ship: "",
     },
     actions: {
       pusher: (el) => {
@@ -33,29 +24,18 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ myList: stored });
         return console.log(getStore().myList);
       },
-
-      // Use getActions to call a function within a fuction
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
+      reset: () => {
+        setStore({ myList: [] });
+        setStore({ direction: "" });
+        return console.log("changes cleared");
       },
-      loadSomeData: () => {
-        /**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
+      setDirection: (dir) => {
+        setStore({ direction: dir });
+        return console.log(getStore().direction);
       },
-      changeColor: (index, color) => {
-        //get the store
-        const store = getStore();
-
-        //we have to loop the entire demo array to look for the respective index
-        //and change its color
-        const demo = store.demo.map((elm, i) => {
-          if (i === index) elm.background = color;
-          return elm;
-        });
-
-        //reset the global store
-        setStore({ demo: demo });
+      setShip: (ship) => {
+        setStore({ ship: ship });
+        return console.log(getStore().ship);
       },
     },
   };
