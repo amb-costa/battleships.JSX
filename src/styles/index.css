@@ -1,3 +1,4 @@
-/* 
-    General Styles
-*/
+#playableButton {
+  width: 30px !important;
+  height: 50px;
+}
