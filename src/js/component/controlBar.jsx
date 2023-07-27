@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext.js";
+import { Link } from "react-router-dom";
 
 const ControlBar = () => {
   const { store, actions } = useContext(Context);
@@ -112,8 +113,18 @@ const ControlBar = () => {
         </div>
 
         {store.userBoard.length == 4 ? (
-          <div className="col-5 my-2 py-1 alert alert-success" role="alert">
-            Ready to play!
+          <div className="col-5 my-2 py-2 justify-content-center">
+            <div
+              className="my-2 py-1 alert alert-success align-self-center"
+              role="alert"
+            >
+              Ready to play!
+            </div>
+            <Link to="/battle">
+              <button className="btn mx-1 border" type="button">
+                Go!
+              </button>
+            </Link>
           </div>
         ) : store.permit ? (
           <div className="col-5 my-2 py-1 alert alert-success" role="alert">
