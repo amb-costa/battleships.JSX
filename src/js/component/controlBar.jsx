@@ -1,8 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import getState from "../store/flux.js";
 import { Context } from "../store/appContext.js";
 
 const ControlBar = () => {
   const { store, actions } = useContext(Context);
+  const [direction, setDirection] = useState(null);
+  const [ship, setShip] = useState(null);
+
+  useEffect(() => {
+    if (direction != null && ship != null) {
+      actions.permit(direction, ship);
+      setDirection(null);
+      setShip(null);
+    }
+  }, [direction, ship]);
 
   return (
     <div className="container justify-content-center">
@@ -12,9 +23,8 @@ const ControlBar = () => {
           <button
             className="btn mx-1 border"
             type="button"
-            value={true}
             onClick={() => {
-              actions.setDirection(true);
+              setDirection(true);
             }}
           >
             Horizontal
@@ -22,9 +32,8 @@ const ControlBar = () => {
           <button
             className="btn mx-1 border"
             type="button"
-            value={false}
             onClick={() => {
-              actions.setDirection(false);
+              setDirection(false);
             }}
           >
             Vertical
@@ -36,7 +45,7 @@ const ControlBar = () => {
             className="btn mx-1 px-2 border"
             type="button"
             onClick={() => {
-              actions.setShip(5);
+              setShip(5);
             }}
           >
             Carrier
@@ -45,7 +54,7 @@ const ControlBar = () => {
             className="btn mx-1 px-2 border"
             type="button"
             onClick={() => {
-              actions.setShip(4);
+              setShip(4);
             }}
           >
             Battleship
@@ -54,7 +63,7 @@ const ControlBar = () => {
             className="btn mx-1 px-2 border"
             type="button"
             onClick={() => {
-              actions.setShip(3);
+              setShip(3);
             }}
           >
             Submarine
@@ -63,7 +72,7 @@ const ControlBar = () => {
             className="btn mx-1 px-2 border"
             type="button"
             onClick={() => {
-              actions.setShip(2);
+              setShip(2);
             }}
           >
             Destroyer

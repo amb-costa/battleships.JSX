@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { Context } from "../store/appContext.js";
 
 // BoardButton =  main constructor for playable buttons
@@ -6,13 +6,12 @@ import { Context } from "../store/appContext.js";
 const BoardButton = ({ buttonID, section }) => {
   const { store, actions } = useContext(Context);
   const coord = `${section}` + `${buttonID}`;
-  const ship = store.ship;
+  const ship = useRef("");
   console.log(typeof ship);
 
   function colorGenerator(i) {
     switch (i) {
       case 5:
-        console.log("yes");
         return `${"col px-0 border bg-danger disabled"}`;
         break;
       case 4:
@@ -25,7 +24,6 @@ const BoardButton = ({ buttonID, section }) => {
         return "col px-0 border bg-warning disabled";
         break;
       default:
-        console.log(i);
         return "col px-0 border";
     }
   }

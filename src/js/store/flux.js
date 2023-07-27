@@ -39,8 +39,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       includes: (coord) => {
         return Object.values(getStore().userBoard).flat().includes(coord);
       },
+      permit: (direction, ship) => {
+        setStore({ permit: true, direction: direction, ship: ship });
+      },
       shipSorter: (id, section) => {
-        if (getStore().direction) {
+        console.log(getStore().direction);
+        if (getStore().permit) {
           if (parseInt(id[1]) + parseInt(getStore().ship) > 10) {
             console.log("not enough space to fit!");
           } else {
