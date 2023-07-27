@@ -23,8 +23,9 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       reset: () => {
-        setStore({ myList: [] });
+        setStore({ userBoard: {} });
         setStore({ direction: "" });
+        setStore({ ship: "" });
         return console.log("changes cleared");
       },
       setDirection: (dir) => {
@@ -35,22 +36,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ ship: ship });
         return console.log(getStore().ship);
       },
-      classPicker: (id) => {
-        const collection = Object.values(getStore().userBoard);
-        const shipColl = Object.keys(getStore().userBoard);
-        if (!collection.flat().includes(id)) {
-          return `${"col px-0 border"}`;
-        } else {
-        }
+      includes: (id) => {
+        return Object.values(getStore().userBoard).flat().includes(id);
       },
-    },
-    shipSorter: (id) => {
-      if (getStore().direction) {
-        if (parseInt(id[1]) + parseInt(getStore().ship) > 10) {
-          console.log("not enough space to fit!");
-        } else {
-          if (Object.values(getStore().userBoard).flat().includes(id)) {
-            console.log("tile already used!");
+      shipSorter: (id) => {
+        if (getStore().direction) {
+          if (parseInt(id[1]) + parseInt(getStore().ship) > 10) {
+            console.log("not enough space to fit!");
           } else {
             let finPick = [];
             for (let i = 0; i < parseInt(getStore().ship); i++) {
@@ -67,10 +59,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
             console.log(getStore().userBoard);
           }
+        } else {
+          return console.log("inprogress...");
         }
-      } else {
-        return console.log("inprogress...");
-      }
+      },
     },
   };
 };

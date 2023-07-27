@@ -6,20 +6,34 @@ import { Context } from "../store/appContext.js";
 const BoardButton = ({ buttonID }) => {
   const { store, actions } = useContext(Context);
 
-  return (
-    <div
-      className={actions.classPicker(`${buttonID}`)}
-      type="button"
-      id={buttonID}
-      disabled={store.myList.includes(`${buttonID}`) ? true : false}
-      style={{ width: "50px", height: "50px" }}
-      onClick={() => {
-        actions.shipSorter(`${buttonID}`);
-      }}
-    >
-      {buttonID}
-    </div>
-  );
+  if (actions.includes(`${buttonID}`)) {
+    return (
+      <div
+        className="col px-0 border bg-secondary"
+        type="button"
+        id={buttonID}
+        disabled={true}
+        style={{ width: "50px", height: "50px" }}
+      >
+        {buttonID}
+      </div>
+    );
+  } else {
+    return (
+      <div
+        className="col px-0 border"
+        type="button"
+        id={buttonID}
+        disabled={false}
+        style={{ width: "50px", height: "50px" }}
+        onClick={() => {
+          actions.shipSorter(`${buttonID}`);
+        }}
+      >
+        {buttonID}
+      </div>
+    );
+  }
 };
 
 export default BoardButton;

@@ -12,6 +12,7 @@ const ControlBar = () => {
           <button
             className="btn mx-1 border"
             type="button"
+            value={true}
             onClick={() => {
               actions.setDirection(true);
             }}
@@ -21,6 +22,7 @@ const ControlBar = () => {
           <button
             className="btn mx-1 border"
             type="button"
+            value={false}
             onClick={() => {
               actions.setDirection(false);
             }}
