@@ -24,55 +24,73 @@ const Board = () => {
         <div className="row mx-0 justify-content-center">
           <div className="col px-0 border bg-secondary bg-opacity-50">A</div>
           {store.board.A.map((index) => {
-            return <BoardButton key={`A${index}`} buttonID={`A${index}`} />;
+            return (
+              <BoardButton key={`A${index}`} buttonID={index} section={"A"} />
+            );
           })}
         </div>
         <div className="row mx-0 justify-content-center">
           <div className="col px-0 border bg-secondary bg-opacity-50">B</div>
           {store.board.B.map((index) => {
-            return <BoardButton key={`B${index}`} buttonID={`B${index}`} />;
+            return (
+              <BoardButton key={`B${index}`} buttonID={index} section={"B"} />
+            );
           })}
         </div>
         <div className="row mx-0 justify-content-center">
           <div className="col px-0 border bg-secondary bg-opacity-50">C</div>
           {store.board.C.map((index) => {
-            return <BoardButton key={`C${index}`} buttonID={`C${index}`} />;
+            return (
+              <BoardButton key={`C${index}`} buttonID={index} section={"C"} />
+            );
           })}
         </div>
         <div className="row mx-0 justify-content-center">
           <div className="col px-0 border bg-secondary bg-opacity-50">D</div>
           {store.board.D.map((index) => {
-            return <BoardButton key={`D${index}`} buttonID={`D${index}`} />;
+            return (
+              <BoardButton key={`D${index}`} buttonID={index} section={"D"} />
+            );
           })}
         </div>
         <div className="row mx-0 justify-content-center">
           <div className="col px-0 border bg-secondary bg-opacity-50">E</div>
           {store.board.E.map((index) => {
-            return <BoardButton key={`E${index}`} buttonID={`E${index}`} />;
+            return (
+              <BoardButton key={`E${index}`} buttonID={index} section={"E"} />
+            );
           })}
         </div>
         <div className="row mx-0 justify-content-center">
           <div className="col px-0 border bg-secondary bg-opacity-50">F</div>
           {store.board.F.map((index) => {
-            return <BoardButton key={`F${index}`} buttonID={`F${index}`} />;
+            return (
+              <BoardButton key={`F${index}`} buttonID={index} section={"F"} />
+            );
           })}
         </div>
         <div className="row mx-0 justify-content-center">
           <div className="col px-0 border bg-secondary bg-opacity-50">G</div>
           {store.board.G.map((index) => {
-            return <BoardButton key={`G${index}`} buttonID={`G${index}`} />;
+            return (
+              <BoardButton key={`G${index}`} buttonID={index} section={"G"} />
+            );
           })}
         </div>
         <div className="row mx-0 justify-content-center">
           <div className="col px-0 border bg-secondary bg-opacity-50">H</div>
           {store.board.H.map((index) => {
-            return <BoardButton key={`H${index}`} buttonID={`H${index}`} />;
+            return (
+              <BoardButton key={`H${index}`} buttonID={index} section={"H"} />
+            );
           })}
         </div>
         <div className="row mx-0 justify-content-center">
           <div className="col px-0 border bg-secondary bg-opacity-50">I</div>
           {store.board.I.map((index) => {
-            return <BoardButton key={`I${index}`} buttonID={`I${index}`} />;
+            return (
+              <BoardButton key={`I${index}`} buttonID={index} section={"I"} />
+            );
           })}
         </div>
       </div>

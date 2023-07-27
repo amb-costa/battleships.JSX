@@ -36,17 +36,17 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ ship: ship });
         return console.log(getStore().ship);
       },
-      includes: (id) => {
-        return Object.values(getStore().userBoard).flat().includes(id);
+      includes: (coord) => {
+        return Object.values(getStore().userBoard).flat().includes(coord);
       },
-      shipSorter: (id) => {
+      shipSorter: (id, section) => {
         if (getStore().direction) {
           if (parseInt(id[1]) + parseInt(getStore().ship) > 10) {
             console.log("not enough space to fit!");
           } else {
             let finPick = [];
             for (let i = 0; i < parseInt(getStore().ship); i++) {
-              finPick.push(`${id[0]}${parseInt(id[1]) + i}`);
+              finPick.push(`${section}${parseInt(id) + i}`);
             }
             if (!Object.hasOwn(getStore().userBoard, getStore().ship)) {
               let obj = {
