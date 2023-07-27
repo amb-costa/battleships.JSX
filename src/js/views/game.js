@@ -8,16 +8,6 @@ const Game = () => {
 
   return (
     <div>
-      <div>
-        <h4>You have selected these so far:</h4>
-        {store.myList.map((index) => {
-          return (
-            <span className="mx-2" key={index}>
-              {index}
-            </span>
-          );
-        })}
-      </div>
       <Board />
     </div>
   );

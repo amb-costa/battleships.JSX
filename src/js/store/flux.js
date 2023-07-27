@@ -3,68 +3,80 @@ import { object } from "prop-types";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      //board contains 9 alpha rows with 9 numerical columns each
-      board: {
-        A: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        B: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        C: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        D: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        E: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        F: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        G: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        H: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        I: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      },
-      myList: [],
-      //direction: true for horizontal, false for vertical
-      direction: "",
-      userBoard: {},
-      ship: "",
+      //boardGen iterates mapping
+      boardGen: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      //userBoard: store for arrays representing ships and their coord
+      userBoard: [],
     },
     actions: {
       reset: () => {
-        setStore({ userBoard: {} });
+        setStore({ userBoard: [] });
         setStore({ direction: "" });
         setStore({ ship: "" });
+        setStore({ permit: false });
         return console.log("changes cleared");
       },
-      setDirection: (dir) => {
-        setStore({ direction: dir });
-        return console.log(getStore().direction);
-      },
-      setShip: (ship) => {
-        setStore({ ship: ship });
-        return console.log(getStore().ship);
-      },
       includes: (coord) => {
-        return Object.values(getStore().userBoard).flat().includes(coord);
+        return getStore().userBoard.flat().includes(coord);
       },
       permit: (direction, ship) => {
         setStore({ permit: true, direction: direction, ship: ship });
       },
+      alphaSwitchNum: (element) => {
+        let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+        let numer = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        if (typeof element == "number") {
+          return alphabet[numer.indexOf(element)];
+        } else {
+          const position = alphabet.indexOf(element);
+          return numer[position];
+        }
+      },
       shipSorter: (id, section) => {
-        console.log(getStore().direction);
         if (getStore().permit) {
-          if (parseInt(id[1]) + parseInt(getStore().ship) > 10) {
+          if (
+            (getStore().direction &&
+              parseInt(id) + parseInt(getStore().ship) > 10) ||
+            (!getStore().direction &&
+              getActions().alphaSwitchNum(section) + parseInt(getStore().ship) >
+                10)
+          ) {
             console.log("not enough space to fit!");
           } else {
             let finPick = [];
             for (let i = 0; i < parseInt(getStore().ship); i++) {
-              finPick.push(`${section}${parseInt(id) + i}`);
+              if (getStore().direction) {
+                finPick.push(`${section}${parseInt(id) + i}`);
+              } else {
+                let index = getActions().alphaSwitchNum(section);
+                let letter = getActions().alphaSwitchNum(index + i);
+                finPick.push(`${letter}${parseInt(id)}`);
+              }
             }
-            if (!Object.hasOwn(getStore().userBoard, getStore().ship)) {
-              let obj = {
-                [getStore().ship]: finPick,
-              };
-              let copy = { ...getStore().userBoard, ...obj };
-              setStore({ userBoard: copy });
+            if (!finPick.some((el) => getActions().includes(el))) {
+              console.log(finPick.some((el) => getActions().includes(el)));
+              const updated = getStore().userBoard;
+              updated.push(finPick);
+              setStore({
+                userBoard: updated,
+                permit: false,
+                direction: "",
+                ship: "",
+              });
             } else {
-              console.log("you made your ship choice already!");
+              console.log("tiles already used!");
             }
-            console.log(getStore().userBoard);
           }
         } else {
-          return console.log("inprogress...");
+          console.log("pick ship and direction first!");
+        }
+        console.log(getStore().userBoard);
+      },
+      coordFinder: (coord) => {
+        for (let index of getStore().userBoard) {
+          if (index.includes(coord)) {
+            return index.length;
+          }
         }
       },
     },
