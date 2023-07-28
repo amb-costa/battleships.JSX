@@ -2,6 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 
+//ControlBar: main div for directon + ship buttons
+//Sends direction + ship to store, so BoardButton can evaluate buttons according to id + section
+//Creates button to redirect to Battle view when all the ships are selected
+//This should disappear when app turns to Battle view, since it only works for ship selection
 const ControlBar = () => {
   const { store, actions } = useContext(Context);
   const [direction, setDirection] = useState(null);
@@ -26,13 +30,13 @@ const ControlBar = () => {
 
   return (
     <div className="container justify-content-center">
-      <div className="row my-3 justify-content-center">
+      <div className="row my-3 bg-white border justify-content-center">
         <div className="col-4">
           <h5>Pick your direction:</h5>
           <button
             className={
               direction == true
-                ? "btn mx-1 border bg-secondary bg-opacity-25"
+                ? "btn mx-1 border bg-success bg-opacity-25"
                 : "btn mx-1 border"
             }
             type="button"
@@ -45,7 +49,7 @@ const ControlBar = () => {
           <button
             className={
               direction == false
-                ? "btn mx-1 border bg-secondary bg-opacity-25"
+                ? "btn mx-1 border bg-success bg-opacity-25"
                 : "btn mx-1 border"
             }
             type="button"

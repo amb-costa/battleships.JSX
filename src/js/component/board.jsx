@@ -3,14 +3,15 @@ import { Context } from "../store/appContext.js";
 import BoardButton from "./boardButton.jsx";
 import ControlBar from "./controlBar.jsx";
 
-// Board: main structure for the game
-// Should generate playable buttons and store the user's choice
+//Board: main structure for the game
+//The idea is to reuse it for the ship selection + actual gameplay for user and CPU
+//Makes use of ControlBar and BoardButton components
 const Board = () => {
   const { store, actions } = useContext(Context);
   return (
     <div className="container justify-content-center" id="board">
       <ControlBar />
-      <div className="container-fluid border border-secondary p-0 mx-auto">
+      <div className="container-fluid border border-secondary bg-white p-0 mx-auto">
         <div className="row bg-secondary bg-opacity-50 mx-0">
           <div className="col px-0 border">-</div>
           {store.boardGen.map((index) => {

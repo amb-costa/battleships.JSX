@@ -1,8 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext.js";
 
-// BoardButton =  main constructor for playable buttons
-// Should change color and trigger the game solver
+//BoardButton =  main constructor for playable buttons
+//Needs an update, since the Board component should be used to select ships and actual gameplay
+//Currently: button+section creates coordinates, then sent to ShipSorter
+//ColorGenerator creates className according to ship: should be useful for gameplay
 const BoardButton = ({ buttonID, section }) => {
   const { store, actions } = useContext(Context);
   const coord = `${section}` + `${buttonID}`;
