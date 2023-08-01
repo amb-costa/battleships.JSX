@@ -9,7 +9,7 @@ import ControlBar from "./controlBar.jsx";
 const Board = () => {
   const { store, actions } = useContext(Context);
   return (
-    <div className="container justify-content-center" id="board">
+    <div className="container-fluid justify-content-center" id="board">
       <ControlBar />
       <div className="container-fluid border border-secondary bg-white p-0 mx-auto">
         <div className="row bg-secondary bg-opacity-50 mx-0">

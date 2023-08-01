@@ -6,21 +6,31 @@ const getState = ({ getStore, getActions, setStore }) => {
       //boardGen iterates mapping
       boardGen: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       //userBoard: store for arrays representing ships and their coord
-      userBoard: [],
+      userBoard: {},
     },
     actions: {
+      generalHandler: (object, data) => {
+        setStore({ [`${object}`]: data });
+      },
       reset: () => {
-        setStore({ userBoard: [] });
+        setStore({ userBoard: {} });
         setStore({ direction: "" });
         setStore({ ship: "" });
-        setStore({ permit: false });
         return console.log("changes cleared");
       },
       includes: (coord) => {
-        return getStore().userBoard.flat().includes(coord);
+        let values = Object.values(getStore().userBoard);
+        return values.flat().includes(coord);
       },
-      permit: (direction, ship) => {
-        setStore({ permit: true, direction: direction, ship: ship });
+      permit: () => {
+        getStore().direction != "" && getStore().ship != "" ? true : false;
+      },
+      coordRandom: () => {
+        const column = parseInt(Math.random() * 8 + 1);
+        const row = getActions().alphaSwitchNum(
+          parseInt(Math.random() * 8 + 1)
+        );
+        const coord = `${row}${column}`;
       },
       alphaSwitchNum: (element) => {
         let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
@@ -33,7 +43,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       shipSorter: (id, section) => {
-        if (getStore().permit) {
+        if (getActions().permit) {
           if (
             (getStore().direction &&
               parseInt(id) + parseInt(getStore().ship) > 10) ||
@@ -54,12 +64,11 @@ const getState = ({ getStore, getActions, setStore }) => {
               }
             }
             if (!finPick.some((el) => getActions().includes(el))) {
-              console.log(finPick.some((el) => getActions().includes(el)));
-              const updated = getStore().userBoard;
-              updated.push(finPick);
+              let updated = getStore().userBoard;
+              const newShip = { [getStore().ship]: finPick };
+              updated = { ...updated, ...newShip };
               setStore({
                 userBoard: updated,
-                permit: false,
                 direction: "",
                 ship: "",
               });
@@ -72,12 +81,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         console.log(getStore().userBoard);
       },
-      coordFinder: (coord) => {
-        for (let index of getStore().userBoard) {
-          if (index.includes(coord)) {
-            return index.length;
-          }
-        }
+      coordFinder: () => {
+        //for (let index of getStore().userBoard) {
+        //if (index.includes(coord)) {
+        //return index.length;
+        //}
+        //}
       },
     },
   };
