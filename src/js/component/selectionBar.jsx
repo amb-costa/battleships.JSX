@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 //Sends direction + ship to store, so BoardButton can evaluate buttons according to id + section
 //Creates button to redirect to Battle view when all the ships are selected
 //This should disappear when app turns to Battle view, since it only works for ship selection
-const ControlBar = () => {
+const SelectionBar = () => {
   const { store, actions } = useContext(Context);
 
   return (
@@ -147,4 +147,4 @@ const ControlBar = () => {
   );
 };
 
-export default ControlBar;
+export default SelectionBar;

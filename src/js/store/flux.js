@@ -9,21 +9,26 @@ const getState = ({ getStore, getActions, setStore }) => {
       userBoard: {},
     },
     actions: {
+      //generalHandler: adds generic key and data to store
       generalHandler: (object, data) => {
         setStore({ [`${object}`]: data });
       },
+      //reset: clears the whole player board
       reset: () => {
         setStore({ userBoard: {} });
-        setStore({ direction: "" });
-        setStore({ ship: "" });
+        setStore({ direction: null });
+        setStore({ ship: null });
         return console.log("changes cleared");
       },
+      //includes: checks if the coordinate is already picked
       includes: (coord) => {
         let values = Object.values(getStore().userBoard);
         return values.flat().includes(coord);
       },
       permit: () => {
-        getStore().direction != "" && getStore().ship != "" ? true : false;
+        return getStore().direction != null && getStore().ship != null
+          ? true
+          : false;
       },
       coordRandom: () => {
         const column = parseInt(Math.random() * 8 + 1);
@@ -35,14 +40,18 @@ const getState = ({ getStore, getActions, setStore }) => {
       alphaSwitchNum: (element) => {
         let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
         let numer = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
         if (typeof element == "number") {
           return alphabet[numer.indexOf(element)];
         } else {
           const position = alphabet.indexOf(element);
+          console.log(position);
           return numer[position];
         }
       },
       shipSorter: (id, section) => {
+        const value = getStore().direction;
+        console.log(value);
         if (getActions().permit) {
           if (
             (getStore().direction &&
@@ -55,7 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else {
             let finPick = [];
             for (let i = 0; i < parseInt(getStore().ship); i++) {
-              if (getStore().direction) {
+              if (getStore().direction == "true") {
                 finPick.push(`${section}${parseInt(id) + i}`);
               } else {
                 let index = getActions().alphaSwitchNum(section);
@@ -69,9 +78,10 @@ const getState = ({ getStore, getActions, setStore }) => {
               updated = { ...updated, ...newShip };
               setStore({
                 userBoard: updated,
-                direction: "",
-                ship: "",
+                direction: null,
+                ship: null,
               });
+              console.log("clean slate");
             } else {
               console.log("tiles already used!");
             }

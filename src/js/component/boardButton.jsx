@@ -5,7 +5,7 @@ import { Context } from "../store/appContext.js";
 //Needs an update, since the Board component should be used to select ships and actual gameplay
 //Currently: button+section creates coordinates, then sent to ShipSorter
 //ColorGenerator creates className according to ship: should be useful for gameplay
-const BoardButton = ({ buttonID, section }) => {
+const BoardButton = ({ buttonID, section, mode }) => {
   const { store, actions } = useContext(Context);
   const coord = `${section}` + `${buttonID}`;
 
