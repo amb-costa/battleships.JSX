@@ -7,11 +7,25 @@ const getState = ({ getStore, getActions, setStore }) => {
       boardGen: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       //userBoard: store for arrays representing ships and their coord
       userBoard: {},
+      cpuBoard: [],
     },
     actions: {
       //generalHandler: adds generic key and data to store
       generalHandler: (object, data) => {
         setStore({ [`${object}`]: data });
+      },
+      //coordGenerator: creates random coordinate but checks if it's already taken first
+      coordGenerator: () => {
+        const row = Math.floor(Math.random() * 9 + 1);
+        const col = Math.floor(Math.random() * 9 + 1);
+        const coord = `${getActions().alphaSwitchNum(row)}${col}`;
+        if (getStore().cpuBoard.includes(coord)) {
+          getActions().coordGenerator();
+        } else {
+          const moves = [coord, ...getStore().cpuBoard];
+          setStore({ cpuBoard: moves });
+          return coord;
+        }
       },
       //reset: clears the whole player board
       reset: () => {
@@ -25,30 +39,25 @@ const getState = ({ getStore, getActions, setStore }) => {
         let values = Object.values(getStore().userBoard);
         return values.flat().includes(coord);
       },
+      //permit: checks if direction + type of ship is selected before returning a pass
       permit: () => {
         return getStore().direction != null && getStore().ship != null
           ? true
           : false;
       },
-      coordRandom: () => {
-        const column = parseInt(Math.random() * 8 + 1);
-        const row = getActions().alphaSwitchNum(
-          parseInt(Math.random() * 8 + 1)
-        );
-        const coord = `${row}${column}`;
-      },
+      //alphaSwitchNum: transforms a number into their corresponding letter and viceversa
       alphaSwitchNum: (element) => {
         let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
         let numer = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
         if (typeof element == "number") {
           return alphabet[numer.indexOf(element)];
         } else {
           const position = alphabet.indexOf(element);
-          console.log(position);
           return numer[position];
         }
       },
+      //shipSorter: receiver a coordinate and adds it to the player board
+      //checks if there's a pass or if there's not enough space to place ship
       shipSorter: (id, section) => {
         const value = getStore().direction;
         console.log(value);

@@ -3,8 +3,7 @@ import SelectionBar from "../component/selectionBar.jsx";
 import SelectionBoard from "../component/selectionBoard.jsx";
 import "../../styles/home.css";
 
-//Selection: works as the Main View
-//Presents the ship selection section:
+//Selection: works as the Main View, shows the ship selection section
 //SelectionBar: picking ship types + direction
 //Approves data to open battle view through a button
 //SelectionBoard: board generated with clickeable buttons
