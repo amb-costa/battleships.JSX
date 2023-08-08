@@ -1,23 +1,42 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext.js";
-import { Link } from "react-router-dom";
 
-//ControlBar: main div for directon + ship buttons
-//Sends direction + ship to store, so BoardButton can evaluate buttons according to id + section
-//Creates button to redirect to Battle view when all the ships are selected
-//This should disappear when app turns to Battle view, since it only works for ship selection
+//StateBar: gives info regarding the CPU moves
+//Displays the CPU movement just made. Did it hit a ship or it missed?
+//Includes button to trigger a new CPU movement
 const StateBar = () => {
   const { store, actions } = useContext(Context);
 
-  return (
-    <div className="container-fluid justify-content-center needs-validation">
-      <div className="row my-3 bg-white border justify-content-center">
-        <div className="col-4 mx-2 py-2">
-          <h5>The CPU just played:</h5>
+  const State = () => {
+    if (store.cpuBoard.length == 0) {
+      return (
+        <div className="my-2">
+          <h4>CPU hasn't made moves yet!</h4>
+          <h6>Click the button below to start the game!</h6>
+        </div>
+      );
+    } else {
+      return (
+        <div className="my-2">
+          <h4>The CPU just played:</h4>
           <h6>{store.cpuBoard[0]}</h6>
         </div>
-        <div className="col-7 mx-2 py-2">
-          <h5>Pick your ship:</h5>
+      );
+    }
+  };
+
+  return (
+    <div className="container-fluid justify-content-center position-relative my-3">
+      <div className="bg-white border mx-5">
+        <State />
+        <div className="my-2">
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            onClick={() => actions.coordGenerator()}
+          >
+            Click for a new CPU move!
+          </button>
         </div>
       </div>
     </div>

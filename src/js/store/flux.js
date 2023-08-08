@@ -23,6 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().coordGenerator();
         } else {
           const moves = [coord, ...getStore().cpuBoard];
+          console.log(moves);
           setStore({ cpuBoard: moves });
           return coord;
         }
