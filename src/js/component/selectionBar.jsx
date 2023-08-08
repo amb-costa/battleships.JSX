@@ -2,10 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 
-//ControlBar: main div for directon + ship buttons
-//Sends direction + ship to store, so BoardButton can evaluate buttons according to id + section
-//Creates button to redirect to Battle view when all the ships are selected
-//This should disappear when app turns to Battle view, since it only works for ship selection
+//SelectionBar: div containing direction + ship options
+//User shall pick direction + ship so the ship placement function works
+//After selection is complete, it displays a button redirecting to the battle page
 const SelectionBar = () => {
   const { store, actions } = useContext(Context);
 
@@ -134,7 +133,7 @@ const SelectionBar = () => {
             </button>
           </Link>
         </div>
-      ) : store.permit ? (
+      ) : store.direction != null && store.ship != null ? (
         <div className="col-5 my-2 py-1 alert alert-success" role="alert">
           Select your head for the ship!
         </div>

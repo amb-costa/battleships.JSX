@@ -23,7 +23,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().coordGenerator();
         } else {
           const moves = [coord, ...getStore().cpuBoard];
-          console.log(moves);
           setStore({ cpuBoard: moves });
           return coord;
         }
@@ -40,12 +39,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         let values = Object.values(getStore().userBoard);
         return values.flat().includes(coord);
       },
-      //permit: checks if direction + type of ship is selected before returning a pass
-      permit: () => {
-        return getStore().direction != null && getStore().ship != null
-          ? true
-          : false;
-      },
       //alphaSwitchNum: transforms a number into their corresponding letter and viceversa
       alphaSwitchNum: (element) => {
         let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
@@ -60,9 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //shipSorter: receiver a coordinate and adds it to the player board
       //checks if there's a pass or if there's not enough space to place ship
       shipSorter: (id, section) => {
-        const value = getStore().direction;
-        console.log(value);
-        if (getActions().permit) {
+        if (getStore().direction != null && getStore().ship != null) {
           if (
             (getStore().direction &&
               parseInt(id) + parseInt(getStore().ship) > 10) ||

@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
 import BoardButton from "./boardButton.jsx";
 
-//Board: main structure for the game
-//The idea is to reuse it for the ship selection + actual gameplay for user and CPU
-//Makes use of ControlBar and BoardButton components
+//SelectionBoard: Board generator under the selection mode
+//Every button solves the ship selection function
+//Should get updated every time there's a change on the store
 const SelectionBoard = () => {
   const { store, actions } = useContext(Context);
   return (
