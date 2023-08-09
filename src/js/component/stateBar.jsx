@@ -19,7 +19,10 @@ const StateBar = () => {
       return (
         <div className="my-2">
           <h4>The CPU just played:</h4>
-          <h6>{store.cpuBoard[0]}</h6>
+          <h6>
+            {actions.numToAlpha(store.cpuBoard[0][0])}
+            {store.cpuBoard[0][1]}
+          </h6>
         </div>
       );
     }

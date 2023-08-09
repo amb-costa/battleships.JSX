@@ -20,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           Math.random() * 9 + 1
         )}`;
         if (getStore().cpuBoard.includes(coord)) {
+          console.log("already generated! trying again...");
           getActions().coordGenerator();
         } else {
           const moves = [coord, ...getStore().cpuBoard];
@@ -31,7 +32,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       //main function that organizes the attack playmode
       cpuAttack: () => {
         const attack = getActions().coordGenerator();
-        console.log(Object.values(getStore().userBoard));
       },
       //reset: clears the whole player board
       reset: () => {
