@@ -19,9 +19,9 @@ const SelectionBar = () => {
                 className="form-check-input"
                 type="radio"
                 name="directionRadio"
-                value={true}
+                value={"horizontal"}
                 id="checkHorizontal"
-                checked={store.direction === "true"}
+                checked={store.direction === "horizontal"}
                 onChange={(e) => {
                   actions.generalHandler("direction", e.target.value);
                 }}
@@ -35,9 +35,9 @@ const SelectionBar = () => {
                 className="form-check-input"
                 type="radio"
                 name="directionRadio"
-                value={false}
+                value={"vertical"}
                 id="checkVertical"
-                checked={store.direction === "false"}
+                checked={store.direction === "vertical"}
                 onChange={(e) => {
                   actions.generalHandler("direction", e.target.value);
                 }}

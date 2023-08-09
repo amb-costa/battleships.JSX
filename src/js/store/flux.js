@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //boardGen iterates mapping
       boardGen: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       //userBoard: store for arrays representing ships and their coord
-      userBoard: {},
+      userBoard: { placements: {}, hits: [], misses: [] },
       cpuBoard: [],
     },
     actions: {
@@ -14,11 +14,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       generalHandler: (object, data) => {
         setStore({ [`${object}`]: data });
       },
-      //coordGenerator: creates random coordinate but checks if it's already taken first
+      //coordGenerator: creates random CPU coordinate but checks if it's already taken first
       coordGenerator: () => {
-        const row = Math.floor(Math.random() * 9 + 1);
-        const col = Math.floor(Math.random() * 9 + 1);
-        const coord = `${getActions().alphaSwitchNum(row)}${col}`;
+        const coord = `${Math.floor(Math.random() * 9 + 1)}${Math.floor(
+          Math.random() * 9 + 1
+        )}`;
         if (getStore().cpuBoard.includes(coord)) {
           getActions().coordGenerator();
         } else {
@@ -31,6 +31,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //main function that organizes the attack playmode
       cpuAttack: () => {
         const attack = getActions().coordGenerator();
+        console.log(Object.values(getStore().userBoard));
       },
       //reset: clears the whole player board
       reset: () => {
@@ -44,63 +45,53 @@ const getState = ({ getStore, getActions, setStore }) => {
         let values = Object.values(getStore().userBoard);
         return values.flat().includes(coord);
       },
-      //alphaSwitchNum: transforms a number into their corresponding letter and viceversa
-      alphaSwitchNum: (element) => {
+      //numToAlpha: transforms a number into a letter for row coordinates display purposes
+      numToAlpha: (number) => {
         let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-        let numer = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        if (typeof element == "number") {
-          return alphabet[numer.indexOf(element)];
-        } else {
-          const position = alphabet.indexOf(element);
-          return numer[position];
-        }
+        let naturals = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        return alphabet[naturals.indexOf(number)];
       },
       //shipFit: does the ship fit the grid on the selected tile?
-      //direction: true for horizontal (selects id), false for vertical (selects section)
+      //direction: horizontal, vertical
       //ship: integer from 2 to 5
-      shipFit: (id, section) => {
-        if (
-          (getStore().direction &&
-            parseInt(id) + parseInt(getStore().ship) > 10) ||
-          (!getStore().direction &&
-            getActions().alphaSwitchNum(section) + parseInt(getStore().ship) >
-              10)
-        ) {
-          return false;
-        } else {
-          return true;
+      shipFit: (row, column) => {
+        if (getStore().direction == "horizontal") {
+          if (parseInt(column) + parseInt(getStore().ship) > 10) return false;
+          else return true;
+        } else if (getStore().direction == "vertical") {
+          if (parseInt(row) + parseInt(getStore().ship) > 10) return false;
+          else return true;
         }
       },
-      //shipSorter: receiver a coordinate and adds it to the player board
+      //shipSorter: receives a coordinate and adds it to the player board
       //first: check if direction + ship type are selected
       //then, checks if the ship fits according to direction + ship
       //creates an obj with the coordinates, then updates the store
       //the data is cleared for next selection
-      shipSorter: (id, section) => {
+      shipSorter: (row, column) => {
         if (getStore().direction != null && getStore().ship != null) {
-          if (!getActions().shipFit(id, section)) {
+          if (!getActions().shipFit(row, column)) {
             console.log("not enough space to fit!");
           } else {
             let finPick = [];
             for (let i = 0; i < parseInt(getStore().ship); i++) {
-              if (getStore().direction == "true") {
-                finPick.push(`${section}${parseInt(id) + i}`);
+              if (getStore().direction == "horizontal") {
+                finPick.push(`${parseInt(row)}${parseInt(column) + i}`);
               } else {
-                let index = getActions().alphaSwitchNum(section);
-                let letter = getActions().alphaSwitchNum(index + i);
-                finPick.push(`${letter}${parseInt(id)}`);
+                finPick.push(`${parseInt(row) + i}${parseInt(column)}`);
               }
             }
-            if (!finPick.some((el) => getActions().includes(el))) {
-              let updated = getStore().userBoard;
+            let updating = getStore().userBoard["placements"];
+            const selected = Object.values(updating);
+            if (!finPick.some((el) => selected.flat().includes(el))) {
               const newShip = { [getStore().ship]: finPick };
-              updated = { ...updated, ...newShip };
+              updating = { ...updating, ...newShip };
               setStore({
-                userBoard: updated,
+                userBoard: { placements: updating },
                 direction: null,
                 ship: null,
               });
-              console.log("clean slate");
+              console.log("clean slate, ready for next step");
             } else {
               console.log("tiles already used!");
             }

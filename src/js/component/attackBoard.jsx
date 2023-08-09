@@ -33,8 +33,8 @@ const AttackBoard = () => {
             return (
               <BoardButton
                 key={`A${index}`}
-                buttonID={index}
-                section={"A"}
+                indexCol={index}
+                indexRow={"A"}
                 mode={"attack"}
               />
             );
@@ -48,8 +48,8 @@ const AttackBoard = () => {
             return (
               <BoardButton
                 key={`B${index}`}
-                buttonID={index}
-                section={"B"}
+                indexCol={index}
+                indexRow={"B"}
                 mode={"attack"}
               />
             );
@@ -63,8 +63,8 @@ const AttackBoard = () => {
             return (
               <BoardButton
                 key={`C${index}`}
-                buttonID={index}
-                section={"C"}
+                indexCol={index}
+                indexRow={"C"}
                 mode={"attack"}
               />
             );
@@ -78,8 +78,8 @@ const AttackBoard = () => {
             return (
               <BoardButton
                 key={`D${index}`}
-                buttonID={index}
-                section={"D"}
+                indexCol={index}
+                indexRow={"D"}
                 mode={"attack"}
               />
             );
@@ -93,8 +93,8 @@ const AttackBoard = () => {
             return (
               <BoardButton
                 key={`E${index}`}
-                buttonID={index}
-                section={"E"}
+                indexCol={index}
+                indexRow={"E"}
                 mode={"attack"}
               />
             );
@@ -108,8 +108,8 @@ const AttackBoard = () => {
             return (
               <BoardButton
                 key={`F${index}`}
-                buttonID={index}
-                section={"F"}
+                indexCol={index}
+                indexRow={"F"}
                 mode={"attack"}
               />
             );
@@ -123,8 +123,8 @@ const AttackBoard = () => {
             return (
               <BoardButton
                 key={`G${index}`}
-                buttonID={index}
-                section={"G"}
+                indexCol={index}
+                indexRow={"G"}
                 mode={"attack"}
               />
             );
@@ -138,8 +138,8 @@ const AttackBoard = () => {
             return (
               <BoardButton
                 key={`H${index}`}
-                buttonID={index}
-                section={"H"}
+                indexCol={index}
+                indexRow={"H"}
                 mode={"attack"}
               />
             );
@@ -153,8 +153,8 @@ const AttackBoard = () => {
             return (
               <BoardButton
                 key={`I${index}`}
-                buttonID={index}
-                section={"I"}
+                indexCol={index}
+                indexRow={"I"}
                 mode={"attack"}
               />
             );

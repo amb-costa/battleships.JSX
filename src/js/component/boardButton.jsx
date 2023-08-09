@@ -3,11 +3,12 @@ import { Context } from "../store/appContext.js";
 
 //BoardButton =  main constructor for playable buttons
 //Needs an update, since the Board component should be used to select ships and actual gameplay
-//Currently: button+section creates coordinates, then sent to ShipSorter
+//Currently: indexRow + indexCol creates coordinates, then sent to ShipSorter
 //ColorGenerator creates className according to ship: should be useful for gameplay
-const BoardButton = ({ buttonID, section, mode }) => {
+const BoardButton = ({ indexCol, indexRow, mode }) => {
   const { store, actions } = useContext(Context);
-  const coord = `${section}` + `${buttonID}`;
+  const letterPos = actions.numToAlpha(indexRow);
+  const coord = `${letterPos}` + `${indexCol}`;
 
   function colorGenerator(i) {
     switch (i) {
@@ -32,14 +33,14 @@ const BoardButton = ({ buttonID, section, mode }) => {
     <div
       className={colorGenerator(actions.coordFinder(coord))}
       type="button"
-      id={buttonID}
+      id={indexCol}
       style={{ width: "50px", height: "50px" }}
       onClick={() => {
-        actions.shipSorter(buttonID, section);
+        actions.shipSorter(indexRow, indexCol);
       }}
     >
-      {section}
-      {buttonID}
+      {letterPos}
+      {indexCol}
     </div>
   );
 };
