@@ -33,7 +33,7 @@ const StateBar = () => {
           <button
             className="btn btn-outline-secondary"
             type="button"
-            onClick={() => actions.coordGenerator()}
+            onClick={() => actions.cpuAttack()}
           >
             Click for a new CPU move!
           </button>

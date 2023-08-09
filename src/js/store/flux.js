@@ -27,6 +27,11 @@ const getState = ({ getStore, getActions, setStore }) => {
           return coord;
         }
       },
+      //cpuAttack: checks userboard using random coordinates from the CPU
+      //main function that organizes the attack playmode
+      cpuAttack: () => {
+        const attack = getActions().coordGenerator();
+      },
       //reset: clears the whole player board
       reset: () => {
         setStore({ userBoard: {} });
@@ -50,17 +55,30 @@ const getState = ({ getStore, getActions, setStore }) => {
           return numer[position];
         }
       },
+      //shipFit: does the ship fit the grid on the selected tile?
+      //direction: true for horizontal (selects id), false for vertical (selects section)
+      //ship: integer from 2 to 5
+      shipFit: (id, section) => {
+        if (
+          (getStore().direction &&
+            parseInt(id) + parseInt(getStore().ship) > 10) ||
+          (!getStore().direction &&
+            getActions().alphaSwitchNum(section) + parseInt(getStore().ship) >
+              10)
+        ) {
+          return false;
+        } else {
+          return true;
+        }
+      },
       //shipSorter: receiver a coordinate and adds it to the player board
-      //checks if there's a pass or if there's not enough space to place ship
+      //first: check if direction + ship type are selected
+      //then, checks if the ship fits according to direction + ship
+      //creates an obj with the coordinates, then updates the store
+      //the data is cleared for next selection
       shipSorter: (id, section) => {
         if (getStore().direction != null && getStore().ship != null) {
-          if (
-            (getStore().direction &&
-              parseInt(id) + parseInt(getStore().ship) > 10) ||
-            (!getStore().direction &&
-              getActions().alphaSwitchNum(section) + parseInt(getStore().ship) >
-                10)
-          ) {
+          if (!getActions().shipFit(id, section)) {
             console.log("not enough space to fit!");
           } else {
             let finPick = [];
