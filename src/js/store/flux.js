@@ -6,7 +6,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       //boardGen iterates mapping
       boardGen: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       //userBoard: store for arrays representing ships and their coord
-      userBoard: { placements: {}, hits: [], misses: [] },
+      userBoard: {
+        placements: { 5: [], 4: [], 3: [], 2: [] },
+        hits: [],
+        misses: [],
+      },
       cpuBoard: [],
     },
     actions: {
@@ -39,11 +43,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ direction: null });
         setStore({ ship: null });
         return console.log("changes cleared");
-      },
-      //includes: checks if the coordinate is already picked
-      includes: (coord) => {
-        let values = Object.values(getStore().userBoard);
-        return values.flat().includes(coord);
       },
       //numToAlpha: transforms a number into a letter for row coordinates display purposes
       numToAlpha: (number) => {

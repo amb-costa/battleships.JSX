@@ -8,30 +8,32 @@ import { Context } from "../store/appContext.js";
 const BoardButton = ({ indexCol, indexRow, mode }) => {
   const { store, actions } = useContext(Context);
   const letterPos = actions.numToAlpha(indexRow);
-  const coord = `${letterPos}` + `${indexCol}`;
+  const coord = `${indexRow}` + `${indexCol}`;
 
+  //colorGenerator: searches for coord in the placement object
+  //colorizes button according to the assigned ship
+  //if button is not assigned to a ship, no color is assigned
   function colorGenerator(i) {
-    switch (i) {
-      case 5:
-        return "col px-0 border bg-danger bg-opacity-50 disabled";
-        break;
-      case 4:
-        return "col px-0 border bg-success bg-opacity-50 disabled";
-        break;
-      case 3:
-        return "col px-0 border bg-primary bg-opacity-50 disabled";
-        break;
-      case 2:
-        return "col px-0 border bg-warning bg-opacity-50 disabled";
-        break;
-      default:
-        return "col px-0 border";
+    let shipSection = store.userBoard["placements"];
+    let placementValues = Object.values(shipSection).flat();
+    if (placementValues.includes(i)) {
+      if (shipSection["5"].includes(i)) {
+        return "col px-0 border bg-danger bg-opacity-50";
+      } else if (shipSection["4"].includes(i)) {
+        return "col px-0 border bg-success bg-opacity-50";
+      } else if (shipSection["3"].includes(i)) {
+        return "col px-0 border bg-primary bg-opacity-50";
+      } else {
+        return "col px-0 border bg-warning bg-opacity-50";
+      }
+    } else {
+      return "col px-0 border";
     }
   }
 
   return (
     <div
-      className={colorGenerator(actions.coordFinder(coord))}
+      className={colorGenerator(coord)}
       type="button"
       id={indexCol}
       style={{ width: "50px", height: "50px" }}
