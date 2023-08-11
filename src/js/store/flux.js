@@ -6,10 +6,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       //boardGen iterates mapping
       boardGen: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       //userBoard: store for arrays representing ships and their coord
+      //placements: coords for every ship
+      //hits: where the CPU generates a coord related to a ship
+      //misses: where the CPU generates a coord not included on the ships
+      //permitted: value to trigger the battle mode (when equals true)
       userBoard: {
         placements: { 5: [], 4: [], 3: [], 2: [] },
         hits: [],
         misses: [],
+        permitted: null,
       },
       cpuBoard: [],
     },
@@ -45,6 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         return console.log("changes cleared");
       },
       //numToAlpha: transforms a number into a letter for row coordinates display purposes
+      //only used on the boards text
       numToAlpha: (number) => {
         let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
         let naturals = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -99,13 +105,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("pick ship and direction first!");
         }
         console.log(getStore().userBoard);
-      },
-      coordFinder: () => {
-        //for (let index of getStore().userBoard) {
-        //if (index.includes(coord)) {
-        //return index.length;
-        //}
-        //}
       },
     },
   };

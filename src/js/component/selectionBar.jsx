@@ -10,7 +10,7 @@ const SelectionBar = () => {
 
   return (
     <form className="container-fluid justify-content-center needs-validation">
-      <div className="row my-3 bg-white border justify-content-center">
+      <div className="row my-2 bg-white border justify-content-center">
         <div className="col-4 mx-2 py-2">
           <h5>Pick your direction:</h5>
           <div className="input-group justify-content-evenly">
@@ -119,29 +119,31 @@ const SelectionBar = () => {
         </div>
       </div>
 
-      {store.userBoard.length == 4 ? (
-        <div className="col-5 my-2 py-2 justify-content-center">
-          <div
-            className="my-2 py-1 alert alert-success align-self-center"
-            role="alert"
-          >
-            Ready to play!
+      <div className="mb-3 px-5 justify-content-center">
+        {Object.values(store.userBoard["placements"]).flat().length == 14 ? (
+          <div>
+            <div className="mx-5 my-0 py-1 alert alert-success" role="alert">
+              Ready to play!
+            </div>
+            <Link to="/battle">
+              <button
+                className="btn px-2 mt-2 btn-outline-secondary"
+                type="submit"
+              >
+                Go!
+              </button>
+            </Link>
           </div>
-          <Link to="/battle">
-            <button className="btn mx-1 border" type="submit">
-              Go!
-            </button>
-          </Link>
-        </div>
-      ) : store.direction != null && store.ship != null ? (
-        <div className="col-5 my-2 py-1 alert alert-success" role="alert">
-          Select your head for the ship!
-        </div>
-      ) : (
-        <div className="col-5 my-2 p-1 alert alert-danger" role="alert">
-          Got to select ship and direction!
-        </div>
-      )}
+        ) : store.direction != null && store.ship != null ? (
+          <div className="mx-5 my-0 py-1  alert alert-success" role="alert">
+            Select your head for the ship!
+          </div>
+        ) : (
+          <div className="mx-5 my-0 py-1 alert alert-danger" role="alert">
+            Select ship and direction first!
+          </div>
+        )}
+      </div>
     </form>
   );
 };
