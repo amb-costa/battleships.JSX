@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
 import BoardButton from "../component/boardButton.jsx";
 
-//Battle: main board in battle mode
+//AttackBoard: main board for battle mode
 //CPU generates a random coord
-//Buttons will react to the attack: trigger a solver function in the store
+//Buttons will react to the attack: trigger a solver function in the store, and colors will change accordingly
 const AttackBoard = () => {
   const { store, actions } = useContext(Context);
   return (

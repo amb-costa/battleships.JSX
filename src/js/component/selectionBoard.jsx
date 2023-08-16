@@ -2,9 +2,8 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
 import BoardButton from "./boardButton.jsx";
 
-//SelectionBoard: Board generator under the selection mode
+//SelectionBoard: board generator under the selection mode
 //Every button solves the ship selection function
-//Should get updated every time there's a change on the store
 const SelectionBoard = () => {
   const { store, actions } = useContext(Context);
   return (

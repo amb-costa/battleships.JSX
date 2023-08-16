@@ -8,7 +8,10 @@ const StateBar = () => {
   const { store, actions } = useContext(Context);
 
   const State = () => {
-    if (store.cpuBoard.length == 0) {
+    if (
+      store.cpuBoard["hits"].length == 0 &&
+      store.cpuBoard["misses"].length == 0
+    ) {
       return (
         <div className="my-2">
           <h4>CPU hasn't made moves yet!</h4>
@@ -20,8 +23,8 @@ const StateBar = () => {
         <div className="my-2">
           <h4>The CPU just played:</h4>
           <h6>
-            {actions.numToAlpha(store.cpuBoard[0][0])}
-            {store.cpuBoard[0][1]}
+            {actions.numToAlpha(store.cpuBoard["play"][0])}
+            {store.cpuBoard["play"][1]}
           </h6>
         </div>
       );
@@ -36,7 +39,7 @@ const StateBar = () => {
           <button
             className="btn btn-outline-secondary"
             type="button"
-            onClick={() => actions.cpuAttack()}
+            onClick={() => actions.coordSorter()}
           >
             Click for a new CPU move!
           </button>

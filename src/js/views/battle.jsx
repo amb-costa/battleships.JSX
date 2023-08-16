@@ -6,14 +6,14 @@ import AttackBoard from "../component/attackBoard.jsx";
 import "../../styles/home.css";
 
 //Battle: view for CPU Attack mode
-//Before anything, checks if the ship selection is complete. if not, redirects to / page
+//Before anything, checks if the ship selection is complete (through the "permitted" object at userBoard). if not, redirects to / page
 //StateBar: info about the CPU moves + attacks + button to trigger CPU moves
 //AttackBoard: board generated with reactive buttons
 const Battle = () => {
   const { store, actions } = useContext(Context);
 
   const Redirect = () => {
-    if (Object.values(store.userBoard["placements"]).flat().length != 14) {
+    if (store.userBoard["permitted"] != true) {
       return (
         <div className="justify-content-center my-5 bg-danger bg-opacity-25 border p-5 position-relative">
           <h1>

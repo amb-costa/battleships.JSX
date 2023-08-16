@@ -120,7 +120,7 @@ const SelectionBar = () => {
       </div>
 
       <div className="mb-3 px-5 justify-content-center">
-        {Object.values(store.userBoard["placements"]).flat().length == 14 ? (
+        {store.userBoard["permitted"] ? (
           <div>
             <div className="mx-5 my-0 py-1 alert alert-success" role="alert">
               Ready to play!
