@@ -1,0 +1,13 @@
+#board {
+  width: 75%;
+}
+
+.alert {
+  width: 30%;
+  margin: auto;
+}
+
+#playable {
+  width: 50px;
+  height: 50px;
+}

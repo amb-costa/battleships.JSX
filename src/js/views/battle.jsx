@@ -5,11 +5,11 @@ import StateBar from "../component/stateBar.jsx";
 import AttackBoard from "../component/attackBoard.jsx";
 import "../../styles/home.css";
 
-//Battle: view for CPU Attack mode
+//Battle : view for CPU Attack mode
 //Before anything, checks if the ship selection is complete (through the "permitted" object at userBoard)
 //If not, redirects to / page to finish the ship selection
-//StateBar: info about the CPU moves + attacks + button to trigger CPU moves
-//AttackBoard: board generated with reactive buttons (not clickeable)
+//StateBar = info about the CPU moves + attacks + button to trigger CPU moves
+//AttackBoard = board generated with reactive buttons (not clickeable)
 const Battle = () => {
   const { store, actions } = useContext(Context);
 
@@ -21,10 +21,7 @@ const Battle = () => {
             Uh oh, seems like you haven't finished your ship selection yet...
           </h1>
           <Link to="/">
-            <button
-              className="btn px-2 mt-2 btn-outline-secondary"
-              type="submit"
-            >
+            <button className="btn px-2 mt-2 btn-outline-danger" type="submit">
               Return to selection page
             </button>
           </Link>

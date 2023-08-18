@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
 import BoardButton from "./boardButton.jsx";
 
-//SelectionBoard: board generator under the selection mode
-//Every button solves the ship selection function
+//SelectionBoard: main board for selection mode
+//Every button is mapped under the "selection" mode
 const SelectionBoard = () => {
   const { store, actions } = useContext(Context);
   return (

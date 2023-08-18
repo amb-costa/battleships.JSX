@@ -1,31 +1,88 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext.js";
+import { Link } from "react-router-dom";
 
-//StateBar: gives info regarding the CPU moves
-//Displays the CPU movement just made. Did it hit a ship or it missed?
-//Includes button to trigger a new CPU movement
+//StateBar : gives info regarding the CPU moves
+//Displays recent move, CPU lives left
+//Includes button to trigger a new CPU movement or reset game after win/lose
 const StateBar = () => {
   const { store, actions } = useContext(Context);
 
+  //State : display for recent moves
+  //If there's no move yet, invites user to start playing
   const State = () => {
     if (
       store.cpuBoard["hits"].length == 0 &&
       store.cpuBoard["misses"].length == 0
     ) {
       return (
-        <div className="my-2">
-          <h4>CPU hasn't made moves yet!</h4>
-          <h6>Click the button below to start the game!</h6>
-        </div>
+        <h6 className="my-1">Click the button below to start the game!</h6>
       );
     } else {
       return (
-        <div className="my-2">
-          <h4>The CPU just played:</h4>
-          <h6>
-            {actions.numToAlpha(store.cpuBoard["play"][0])}
-            {store.cpuBoard["play"][1]}
-          </h6>
+        <h4 className="my-1">
+          The CPU just played {actions.numToAlpha(store.cpuBoard["play"][0])}
+          {store.cpuBoard["play"][1]}{" "}
+        </h4>
+      );
+    }
+  };
+
+  //LiveWinOrDie : display for CPU behavior
+  //If CPU sinks a ship, user loses
+  //If CPU doesn't sink a ship before 25 lives runs out, user wins
+  //If the game is still going, displays how many lives are left
+  //Also displays a button to trigger the CPU move, or a redirect to selection page
+  const LiveWinOrDie = () => {
+    if (Object.keys(store.userBoard["placements"]).length != 3) {
+      if (store.cpuBoard["lives"] != 0) {
+        return (
+          <div>
+            <h3>CPU has {store.cpuBoard["lives"]} lives left!</h3>
+            <div className="my-1">
+              <button
+                className="btn btn-outline-primary"
+                type="button"
+                onClick={() => actions.coordSorter()}
+              >
+                Click for a new CPU move!
+              </button>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <h3 className="text-success">Congrats, you won!</h3>
+            <div className="my-1">
+              <Link to="/">
+                <button
+                  className="btn btn-outline-success"
+                  type="button"
+                  onClick={() => actions.reset()}
+                >
+                  Click to start a new game!
+                </button>
+              </Link>
+            </div>
+          </div>
+        );
+      }
+    } else {
+      return (
+        <div>
+          <h3 className="text-danger">Sorry, the CPU won!</h3>
+          <div className="my-1">
+            <Link to="/">
+              <button
+                className="btn btn-outline-danger"
+                type="button"
+                onClick={() => actions.reset()}
+              >
+                Click to start a new game!
+              </button>
+            </Link>
+          </div>
         </div>
       );
     }
@@ -34,16 +91,9 @@ const StateBar = () => {
   return (
     <div className="container-fluid justify-content-center position-relative my-3">
       <div className="bg-white border mx-5">
+        <h3 className="my-1">If the CPU sinks a ship, you lose!</h3>
         <State />
-        <div className="my-2">
-          <button
-            className="btn btn-outline-secondary"
-            type="button"
-            onClick={() => actions.coordSorter()}
-          >
-            Click for a new CPU move!
-          </button>
-        </div>
+        <LiveWinOrDie />
       </div>
     </div>
   );

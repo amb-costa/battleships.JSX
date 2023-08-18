@@ -1,18 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
 
-//BoardButton =  main constructor for playable buttons
-//Needs an update, since the Board component should be used to select ships and actual gameplay
-//Currently: indexRow + indexCol creates coordinates, then sent to ShipSorter
-//ColorGenerator creates className according to ship: should be useful for gameplay
+//BoardButton :  main constructor for playable buttons
+//indexCol = vertical coordinate (showed as a number)
+//indexRow = horizontal coordinate (showed as a letter)
+//mode = "selection" or "attack"
 const BoardButton = ({ indexCol, indexRow, mode }) => {
   const { store, actions } = useContext(Context);
   const letterPos = actions.numToAlpha(indexRow);
   const coord = `${indexRow}` + `${indexCol}`;
 
-  //colorGenerator: searches for coord in the placement object, where ships are stored
-  //colorizes button according to the assigned ship and disables it
-  //if button is not assigned to a ship, no color is assigned and it's clickeable
+  //colorGenerator : gives a color to each button according to their type
+  //In "selection" mode : all buttons are clickeable until they're assigned to a ship
+  //In "attack" mode : no buttons are clickeable, and the color is reactive to the CPU moves
   function colorGenerator(i) {
     let shipSection = store.userBoard["placements"];
     let placementValues = Object.values(shipSection).flat();
@@ -31,23 +31,23 @@ const BoardButton = ({ indexCol, indexRow, mode }) => {
     }
   }
 
+  //modeRedirect : if mode == "selection", the button will have an onClick calling the shipSorter function
   function modeRedirect() {
     mode == "selection" ? actions.shipSorter(indexRow, indexCol) : null;
   }
 
   return (
-    <button
+    <div
       className={colorGenerator(coord)}
       type="button"
-      id={indexCol}
-      style={{ width: "50px", height: "50px" }}
+      id="playable"
       onClick={() => {
         modeRedirect();
       }}
     >
       {letterPos}
       {indexCol}
-    </button>
+    </div>
   );
 };
 

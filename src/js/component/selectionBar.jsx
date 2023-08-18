@@ -2,15 +2,15 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 
-//SelectionBar: div containing direction + ship options
-//User shall pick direction + ship so the ship placement function works
-//After selection is complete and validated, it displays a button redirecting to the battle page
+//SelectionBar : selection for direction + ship type
+//direction + ship type are necessary for the shipSorter function to work (see flux.js for reference)
+//Once all ships are selected, a redirecting button is displayed
 const SelectionBar = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <form className="container-fluid justify-content-center needs-validation">
-      <div className="row my-2 bg-white border justify-content-center">
+    <form className="container-fluid justify-content-center needs-validation px-5">
+      <div className="row my-2 bg-white border justify-content-center mx-5">
         <div className="col-4 mx-2 py-2">
           <h5>Pick your direction:</h5>
           <div className="input-group justify-content-evenly">
@@ -122,12 +122,12 @@ const SelectionBar = () => {
       <div className="mb-3 px-5 justify-content-center">
         {store.userBoard["permitted"] ? (
           <div>
-            <div className="mx-5 my-0 py-1 alert alert-success" role="alert">
+            <div className="my-0 py-1 alert alert-success" role="alert">
               Ready to play!
             </div>
             <Link to="/battle">
               <button
-                className="btn px-2 mt-2 btn-outline-secondary"
+                className="btn px-2 mt-2 btn-outline-success"
                 type="submit"
               >
                 Go!
@@ -135,11 +135,11 @@ const SelectionBar = () => {
             </Link>
           </div>
         ) : store.direction != null && store.ship != null ? (
-          <div className="mx-5 my-0 py-1  alert alert-success" role="alert">
+          <div className="my-0 py-1  alert alert-success" role="alert">
             Select your head for the ship!
           </div>
         ) : (
-          <div className="mx-5 my-0 py-1 alert alert-danger" role="alert">
+          <div className="my-0 py-1 alert alert-danger" role="alert">
             Select ship and direction first!
           </div>
         )}
