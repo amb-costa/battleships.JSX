@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 
 //SelectionBar: div containing direction + ship options
 //User shall pick direction + ship so the ship placement function works
-//After selection is complete, it displays a button redirecting to the battle page
+//After selection is complete and validated, it displays a button redirecting to the battle page
 const SelectionBar = () => {
   const { store, actions } = useContext(Context);
 

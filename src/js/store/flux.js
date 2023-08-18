@@ -24,6 +24,49 @@ const getState = ({ getStore, getActions, setStore }) => {
       generalHandler: (object, data) => {
         setStore({ [`${object}`]: data });
       },
+      //numToAlpha: transforms a number into a letter for row coordinates display purposes
+      //only used on the boards' text
+      numToAlpha: (number) => {
+        const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+        const naturals = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        return alphabet[naturals.indexOf(number)];
+      },
+      //shipFit: does the ship fit the grid on the selected tile?
+      //direction: horizontal, vertical
+      //ship: integer from 2 to 5
+      shipFit: (row, column) => {
+        if (getStore().direction == "horizontal") {
+          if (parseInt(column) + parseInt(getStore().ship) > 10) return false;
+          else return true;
+        } else if (getStore().direction == "vertical") {
+          if (parseInt(row) + parseInt(getStore().ship) > 10) return false;
+          else return true;
+        }
+      },
+      //validate: checks if every ship has been selected in the board
+      //permitted is used to grant access to the battle view
+      validate: () => {
+        const ships = Object.values(getStore().userBoard["placements"]);
+        if (ships.flat().length == 14) {
+          const base = getStore().userBoard;
+          base["permitted"] = true;
+          setStore({ userBoard: base });
+          console.log("ready to go!");
+        }
+      },
+      //coloredShip: delivers a className for buttons according to the ship type
+      //it assumes the coord belongs to a ship, so the checking is done out of the function scope
+      coloredShip: (coord) => {
+        if (getStore().userBoard["placements"]["5"].includes(coord)) {
+          return "btn col px-0 border bg-danger bg-opacity-75 disabled";
+        } else if (getStore().userBoard["placements"]["4"].includes(coord)) {
+          return "btn col px-0 border bg-success bg-opacity-75 disabled";
+        } else if (getStore().userBoard["placements"]["3"].includes(coord)) {
+          return "btn col px-0 border bg-info bg-opacity-75 disabled";
+        } else {
+          return "btn col px-0 border bg-warning bg-opacity-75 disabled";
+        }
+      },
       //coordSorter: creates random CPU coordinate but checks if it's already taken first
       //if it's already taken, the function recursively calls itself
       //if not, triggers the attack function through the generated coord
@@ -35,7 +78,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           getStore().cpuBoard["hits"].includes(coord) ||
           getStore().cpuBoard["misses"].includes(coord)
         ) {
-          console.log("already generated! trying again...");
           getActions().coordSorter();
         } else {
           const cpu = getStore().cpuBoard;
@@ -85,38 +127,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ direction: null });
         setStore({ ship: null });
         return console.log("changes cleared");
-      },
-      //numToAlpha: transforms a number into a letter for row coordinates display purposes
-      //only used on the boards' text
-      numToAlpha: (number) => {
-        const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-        const naturals = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-        return alphabet[naturals.indexOf(number)];
-      },
-      //shipFit: does the ship fit the grid on the selected tile?
-      //direction: horizontal, vertical
-      //ship: integer from 2 to 5
-      shipFit: (row, column) => {
-        if (getStore().direction == "horizontal") {
-          if (parseInt(column) + parseInt(getStore().ship) > 10) return false;
-          else return true;
-        } else if (getStore().direction == "vertical") {
-          if (parseInt(row) + parseInt(getStore().ship) > 10) return false;
-          else return true;
-        }
-      },
-      //validate: checks if every ship has been selected in the board
-      //permitted is used to grant access to the battle view
-      validate: () => {
-        const ships = Object.values(getStore().userBoard["placements"]);
-        if (ships.flat().length == 14) {
-          const base = getStore().userBoard;
-          base["permitted"] = true;
-          setStore({ userBoard: base });
-          console.log("ready to go!");
-        } else {
-          console.log("ships missing...");
-        }
       },
       //shipSorter: receives a coordinate and adds it to the player board
       //first: check if direction + ship type are selected

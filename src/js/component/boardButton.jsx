@@ -17,18 +17,22 @@ const BoardButton = ({ indexCol, indexRow, mode }) => {
     let shipSection = store.userBoard["placements"];
     let placementValues = Object.values(shipSection).flat();
     if (placementValues.includes(i)) {
-      if (shipSection["5"].includes(i)) {
-        return "btn col px-0 border bg-danger bg-opacity-50 disabled";
-      } else if (shipSection["4"].includes(i)) {
-        return "btn col px-0 border bg-success bg-opacity-50 disabled";
-      } else if (shipSection["3"].includes(i)) {
-        return "btn col px-0 border bg-primary bg-opacity-50 disabled";
-      } else {
-        return "btn col px-0 border bg-warning bg-opacity-50 disabled";
-      }
+      return actions.coloredShip(i);
+    } else if (store.cpuBoard["hits"].includes(i)) {
+      return "btn col px-0 border bg-dark disabled";
+    } else if (store.cpuBoard["misses"].includes(i)) {
+      return "btn col px-0 border bg-secondary disabled";
     } else {
-      return "btn col px-0 border";
+      if (mode == "selection") {
+        return "btn col px-0 border";
+      } else {
+        return "btn col px-0 border bg-primary bg-opacity-25 disabled";
+      }
     }
+  }
+
+  function modeRedirect() {
+    mode == "selection" ? actions.shipSorter(indexRow, indexCol) : null;
   }
 
   return (
@@ -38,7 +42,7 @@ const BoardButton = ({ indexCol, indexRow, mode }) => {
       id={indexCol}
       style={{ width: "50px", height: "50px" }}
       onClick={() => {
-        actions.shipSorter(indexRow, indexCol);
+        modeRedirect();
       }}
     >
       {letterPos}

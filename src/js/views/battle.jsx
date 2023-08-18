@@ -6,9 +6,10 @@ import AttackBoard from "../component/attackBoard.jsx";
 import "../../styles/home.css";
 
 //Battle: view for CPU Attack mode
-//Before anything, checks if the ship selection is complete (through the "permitted" object at userBoard). if not, redirects to / page
+//Before anything, checks if the ship selection is complete (through the "permitted" object at userBoard)
+//If not, redirects to / page to finish the ship selection
 //StateBar: info about the CPU moves + attacks + button to trigger CPU moves
-//AttackBoard: board generated with reactive buttons
+//AttackBoard: board generated with reactive buttons (not clickeable)
 const Battle = () => {
   const { store, actions } = useContext(Context);
 

@@ -3,8 +3,8 @@ import { Context } from "../store/appContext.js";
 import BoardButton from "../component/boardButton.jsx";
 
 //AttackBoard: main board for battle mode
-//CPU generates a random coord
-//Buttons will react to the attack: trigger a solver function in the store, and colors will change accordingly
+//Using the StateBar, CPU will generate a coord to attack
+//Buttons will react to the attack: trigger a solver function in the store, and button colors will change accordingly
 const AttackBoard = () => {
   const { store, actions } = useContext(Context);
   return (
