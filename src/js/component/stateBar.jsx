@@ -29,7 +29,7 @@ const StateBar = () => {
   };
 
   //isEmpty : checks if there's a ship with no coords
-  //that means a ship got sunked
+  //that means a ship got sunk
   const isEmpty = () => {
     const ships = store.userBoard["placements"];
     for (let key of Object.keys(ships)) {

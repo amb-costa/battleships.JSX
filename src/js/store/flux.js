@@ -119,7 +119,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             if (attacked[key].length == 1) {
               let cpu = getStore().cpuBoard;
               cpu["sunk"] = key;
-              console.log(`your ${key} just sunked!`);
+              console.log(`your ${key} just sunk!`);
               setStore({ cpuBoard: cpu });
             }
             attacked[key] = attacked[key].filter((el) => el != coord);
