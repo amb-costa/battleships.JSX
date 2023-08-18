@@ -28,13 +28,25 @@ const StateBar = () => {
     }
   };
 
+  //isEmpty : checks if there's a ship with no coords
+  //that means a ship got sunked
+  const isEmpty = () => {
+    const ships = store.userBoard["placements"];
+    for (let key of Object.keys(ships)) {
+      if (ships[key].length == 0) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   //LiveWinOrDie : display for CPU behavior
   //If CPU sinks a ship, user loses
   //If CPU doesn't sink a ship before 25 lives runs out, user wins
   //If the game is still going, displays how many lives are left
   //Also displays a button to trigger the CPU move, or a redirect to selection page
   const LiveWinOrDie = () => {
-    if (Object.keys(store.userBoard["placements"]).length != 3) {
+    if (!isEmpty()) {
       if (store.cpuBoard["lives"] != 0) {
         return (
           <div>

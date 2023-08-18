@@ -63,7 +63,7 @@ const SelectionBar = () => {
                   actions.generalHandler("ship", e.target.value);
                 }}
               />
-              <label className="form-check-label" htmlFor="check5">
+              <label className="form-check-label text-danger" htmlFor="check5">
                 Cruiser
               </label>
             </div>
@@ -79,7 +79,7 @@ const SelectionBar = () => {
                   actions.generalHandler("ship", e.target.value);
                 }}
               />
-              <label className="form-check-label" htmlFor="check4">
+              <label className="form-check-label text-success" htmlFor="check4">
                 Battleship
               </label>
             </div>
@@ -95,7 +95,7 @@ const SelectionBar = () => {
                   actions.generalHandler("ship", e.target.value);
                 }}
               />
-              <label className="form-check-label" htmlFor="check3">
+              <label className="form-check-label text-info" htmlFor="check3">
                 Submarine
               </label>
             </div>
@@ -111,7 +111,7 @@ const SelectionBar = () => {
                   actions.generalHandler("ship", e.target.value);
                 }}
               />
-              <label className="form-check-label" htmlFor="check2">
+              <label className="form-check-label text-warning" htmlFor="check2">
                 Destroyer
               </label>
             </div>
