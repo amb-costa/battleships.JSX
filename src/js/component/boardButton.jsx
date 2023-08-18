@@ -21,7 +21,7 @@ const BoardButton = ({ indexCol, indexRow, mode }) => {
     } else if (store.cpuBoard["hits"].includes(i)) {
       return "btn col px-0 border bg-dark disabled";
     } else if (store.cpuBoard["misses"].includes(i)) {
-      return "btn col px-0 border bg-secondary disabled";
+      return "btn col px-0 border bg-secondary bg-opacity-25 disabled";
     } else {
       if (mode == "selection") {
         return "btn col px-0 border";
